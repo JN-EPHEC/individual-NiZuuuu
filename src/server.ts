@@ -1,11 +1,11 @@
 import sequelize from './config/database.js';
 import userRoutes from './routes/userRoutes.js';
 import express, { type Request, type Response } from 'express';
-import User from './models/User.js'; 
+
 const app= express();
 const port= 3000;
+app.use(express.json()); 
 app.use('/api/users', userRoutes);
-
 app.get('/', (req: Request, res: Response) => {
     res.send("Bienvenue sur mon serveur API");
 });
