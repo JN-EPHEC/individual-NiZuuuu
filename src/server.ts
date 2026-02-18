@@ -6,9 +6,7 @@ const app= express();
 const port= 3000;
 app.use(express.json()); 
 app.use('/api/users', userRoutes);
-app.get('/', (req: Request, res: Response) => {
-    res.send("Bienvenue sur mon serveur API");
-});
+app.use(express.static('public'));
 
 
 //ex 6.2
@@ -46,9 +44,6 @@ sequelize.sync({ alter: true })
         console.error('Erreur lors de la synchronisation de la DB :', err);
     });
 
-app.listen(port,() => {
-    console.log('serveur lancé sur http://localhost:'+port);
-})
 
 function greet(name: string): string {
 return name+ " est le boat"
