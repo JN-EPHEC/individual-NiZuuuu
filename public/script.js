@@ -16,7 +16,7 @@ async function loadUsers() {
             li.className = "list-group-item d-flex justify-content-between align-items-center";
             
             li.innerHTML = `
-                <span>${user.prenom} ${user.nom}</span>
+                <span>${user.prenom} ${user.nom} (${user.email})</span>
                 <button class="btn btn-danger btn-sm" onclick="deleteUser(${user.id})">X</button>
             `;
             
@@ -32,11 +32,12 @@ userForm.addEventListener('submit', async (e) => {
 
     const nom = document.getElementById('nom').value;
     const prenom = document.getElementById('prenom').value;
+    const email = document.getElementById('email').value;
 
     const response = await fetch('/api/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nom, prenom })
+        body: JSON.stringify({ nom, prenom, email })
     });
 
     if (response.ok) {

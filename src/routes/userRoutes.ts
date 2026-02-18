@@ -13,13 +13,22 @@ router.get('/', async (req: Request, res: Response) => {
     }
 });
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', async (req, res) => {
     try {
-        const { nom, prenom } = req.body;
-        const newUser = await User.create({ nom, prenom });
-        res.status(201).json(newUser); 
-    } catch (error) {
-        res.status(400).json({ message: "Erreur lors de la création de l'utilisateur" });
+        const { nom, prenom, email } = req.body; 
+
+        if (!nom || !prenom || !email) {
+            return res.status(400).json({ error: "Tous les champs sont obligatoires." });
+        }
+
+        const newUser = await User.create({ nom, prenom, email });
+        res.status(201).json(newUser);
+        
+    } catch (error: any) {
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            return res.status(400).json({ error: "Cet email est déjà utilisé." });
+        }
+        res.status(500).json({ error: "Erreur serveur lors de la création." });
     }
 });
 
