@@ -4,6 +4,7 @@ import express, { type Request, type Response } from 'express';
 import { requestLogger } from './middlewares/logger';
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger";
+import cors from 'cors';
 
 const app= express();
 const port= 3000;
@@ -14,6 +15,8 @@ app.use(requestLogger);
 app.use('/api/users', userRoutes);
 app.use(express.static('public'));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(cors()); // Autorise tout le monde (acceptable uniquement en dev)
+
 
 //ex 6.2
 app.get('/api/hello/:name', (req, res) => {
