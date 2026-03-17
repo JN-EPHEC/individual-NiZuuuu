@@ -11,13 +11,15 @@ export const getAllUsers = async (req: Request, res: Response) => {
     }
 };
 
-// Contrôleur pour la création (celle avec l'email du TP précédent !)
+
 export const createUser = async (req: Request, res: Response) => {
     try {
-        const { firstName, lastName, email } = req.body;
-        const newUser = await User.create({ firstName, lastName, email });
+        console.log("Données reçues du front :", req.body);
+        const { nom, prenom } = req.body; 
+        const newUser = await User.create({ nom, prenom });
         res.status(201).json(newUser);
     } catch (error) {
+        console.error("ERREUR SEQUELIZE :", (error as any).message);
         res.status(400).json({ error: (error as any).message });
     }
 };

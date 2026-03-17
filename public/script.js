@@ -34,10 +34,13 @@ userForm.addEventListener('submit', async (e) => {
     const prenom = document.getElementById('prenom').value;
 
     const response = await fetch('/api/users', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nom, prenom })
-    });
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ 
+        nom: document.getElementById('nom').value, 
+        prenom: document.getElementById('prenom').value 
+    })
+});
 
     if (response.ok) {
         document.getElementById('nom').value = ''; 

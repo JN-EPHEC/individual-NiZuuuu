@@ -1,10 +1,14 @@
 import sequelize from './config/database.js';
 import userRoutes from './routes/userRoutes.js';
 import express, { type Request, type Response } from 'express';
+import { requestLogger } from './middlewares/logger';
 
 const app= express();
 const port= 3000;
 app.use(express.json()); 
+
+app.use(requestLogger);
+
 app.use('/api/users', userRoutes);
 app.use(express.static('public'));
 
