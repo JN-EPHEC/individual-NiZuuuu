@@ -2,6 +2,8 @@ import sequelize from './config/database.js';
 import userRoutes from './routes/userRoutes.js';
 import express, { type Request, type Response } from 'express';
 import { requestLogger } from './middlewares/logger';
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./config/swagger";
 
 const app= express();
 const port= 3000;
@@ -11,7 +13,7 @@ app.use(requestLogger);
 
 app.use('/api/users', userRoutes);
 app.use(express.static('public'));
-
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //ex 6.2
 app.get('/api/hello/:name', (req, res) => {
