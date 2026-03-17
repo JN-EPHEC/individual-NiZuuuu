@@ -23,6 +23,27 @@ export const createUser = async (req: Request, res: Response) => {
         res.status(400).json({ error: (error as any).message });
     }
 };
+export const updateUser = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id as string; 
+    const { nom, prenom } = req.body;
+
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      return res.status(404).json({ error: "Utilisateur non trouvé." });
+    }
+
+    if (nom) user.nom = nom;
+    if (prenom) user.prenom = prenom;
+
+    await user.save();
+
+    res.json({ message: "Utilisateur mis à jour !", user });
+  } catch (error) {
+    res.status(500).json({ error: "Erreur lors de la mise à jour." });
+  }
+};
 
 // Contrôleur pour la suppression
 export const deleteUser = async (req: Request, res: Response) => {
