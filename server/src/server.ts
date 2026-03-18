@@ -8,6 +8,7 @@ import cors from 'cors';
 
 const app= express();
 const port= 3000;
+app.use(cors()); // Autorise tout le monde (acceptable uniquement en dev)
 app.use(express.json()); 
 
 app.use(requestLogger);
@@ -15,8 +16,9 @@ app.use(requestLogger);
 app.use('/api/users', userRoutes);
 app.use(express.static('public'));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use(cors()); // Autorise tout le monde (acceptable uniquement en dev)
-
+app.get('/', (req, res) => {
+  res.send('API Node.js opérationnelle ! Allez sur /api-docs pour la doc.');
+});
 
 //ex 6.2
 app.get('/api/hello/:name', (req, res) => {

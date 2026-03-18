@@ -72,7 +72,7 @@ router.put("/:id", checkIdParam, userController.updateUser);
 
 /**
  * @swagger
- * api/users/{id}:
+ * /api/users/{id}:
  *   delete:
  *     summary: Suprimer...
  *     tags: [Users]
